@@ -12,18 +12,39 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError('');
-    try {
-      const res = await axios.post('http://localhost:8000/api/login', form);
-      localStorage.setItem('token', res.data.access_token);
-      localStorage.setItem('role', res.data.role);
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err.response?.data?.detail || 'Login failed');
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setError('');
+
+  const formData = new URLSearchParams();
+  formData.append('username', form.email); // FastAPI uses 'username'
+  formData.append('password', form.password);
+
+  try {
+    const res = await axios.post('http://localhost:8000/login', formData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+    localStorage.setItem('token', res.data.access_token);
+    localStorage.setItem('role', res.data.role);
+
+    // 👇 Redirect based on role
+    if (res.data.role === 'manager') {
+      navigate('/manager');
+    } else if (res.data.role === 'employee') {
+      navigate('/employee');
+    } else {
+      setError('Unknown role');
     }
-  };
+
+  } catch (err) {
+    setError(err.response?.data?.detail || 'Login failed');
+  }
+};
+
+
 
   return (
     <div className="login-wrapper d-flex justify-content-center align-items-center vh-100">
@@ -33,7 +54,7 @@ const Login = () => {
           <div className="form-group mb-3">
             <label>Email</label>
             <input
-              type="email"
+              type="text"
               name="email"
               className="form-control"
               value={form.email}
