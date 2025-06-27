@@ -14,23 +14,31 @@ const Navbar = ({ role }) => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
       <div className="container">
         <span className="navbar-brand fw-bold">Feedback Portal</span>
-        <div className="collapse navbar-collapse justify-content-end">
+
+        {/* Toggler for mobile */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul className="navbar-nav mb-2 mb-lg-0">
             {role === 'manager' && (
               <>
                 <li className="nav-item">
-                  <button
-                    className="btn btn-link nav-link"
-                    onClick={() => navigate('/manager')}
-                  >
+                  <button className="btn btn-link nav-link" onClick={() => navigate('/manager')}>
                     Dashboard
                   </button>
                 </li>
                 <li className="nav-item">
-                  <button
-                    className="btn btn-link nav-link"
-                    onClick={() => navigate('/give-feedback')}
-                  >
+                  <button className="btn btn-link nav-link" onClick={() => navigate('/give-feedback')}>
                     Give Feedback
                   </button>
                 </li>
@@ -38,10 +46,7 @@ const Navbar = ({ role }) => {
             )}
             {role === 'employee' && (
               <li className="nav-item">
-                <button
-                  className="btn btn-link nav-link"
-                  onClick={() => navigate('/employee')}
-                >
+                <button className="btn btn-link nav-link" onClick={() => navigate('/employee')}>
                   My Feedback
                 </button>
               </li>
