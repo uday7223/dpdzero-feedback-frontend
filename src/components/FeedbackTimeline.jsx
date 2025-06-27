@@ -12,10 +12,10 @@ const FeedbackTimeline = ({ feedbacks }) => {
         <div key={index} className="card mb-3 shadow-sm">
           <div className="card-body">
             <h6 className="card-subtitle mb-2 text-muted">
-              Submitted By: {item.manager_email}
+              Submitted By: {item.manager_id}
             </h6>
             <p><strong>Strengths:</strong> {item.strengths}</p>
-            <p><strong>Areas to Improve:</strong> {item.improvements}</p>
+            <p><strong>Areas to Improve:</strong> {item.areas_to_improve}</p>
             <p><strong>Sentiment:</strong> <span className={`badge bg-${getSentimentColor(item.sentiment)}`}>{item.sentiment}</span></p>
             <small className="text-muted">Date: {new Date(item.created_at).toLocaleDateString()}</small>
           </div>

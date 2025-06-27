@@ -8,7 +8,7 @@ const EmployeeDashboard = () => {
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const res = await fetch("http://localhost:8000/my-feedbacks/", {
+        const res = await fetch("http://localhost:8000/feedback/employee", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

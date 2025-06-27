@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 
 const FeedbackForm = ({ onSubmit }) => {
-  const [employeeEmail, setEmployeeEmail] = useState('');
+  const [employeeId, setEmployeeId] = useState('');
   const [strengths, setStrengths] = useState('');
   const [improvements, setImprovements] = useState('');
   const [sentiment, setSentiment] = useState('positive');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ employeeEmail, strengths, improvements, sentiment });
+    onSubmit({
+      employee_id: parseInt(employeeId),
+      strengths,
+      areas_to_improve: improvements,
+      sentiment,
+    });
 
     // Reset form
-    setEmployeeEmail('');
+    setEmployeeId('');
     setStrengths('');
     setImprovements('');
     setSentiment('positive');
@@ -22,12 +27,12 @@ const FeedbackForm = ({ onSubmit }) => {
       <h5 className="mb-3">Submit Feedback</h5>
 
       <div className="mb-3">
-        <label className="form-label">Employee Email</label>
+        <label className="form-label">Employee ID</label>
         <input
-          type="email"
+          type="number"
           className="form-control"
-          value={employeeEmail}
-          onChange={(e) => setEmployeeEmail(e.target.value)}
+          value={employeeId}
+          onChange={(e) => setEmployeeId(e.target.value)}
           required
         />
       </div>
