@@ -5,7 +5,9 @@ import Navbar from '../components/Navbar';
 const ManagerDashboard = () => {
    const handleFeedbackSubmit = async (feedbackData) => {
     try {
-      const response = await fetch('http://localhost:8000/feedbacks/', {
+      console.log('Submitting feedback:', feedbackData);
+      // Make sure to replace the URL with your actual backend endpoint
+      const response = await fetch('http://localhost:8000/feedback/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
