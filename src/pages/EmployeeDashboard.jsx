@@ -24,13 +24,35 @@ const EmployeeDashboard = () => {
     fetchFeedbacks();
   }, []);
 
+   const handleAcknowledge = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:8000/feedback/acknowledge/${id}/`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!res.ok) throw new Error("Acknowledgement failed");
+
+      // Update UI
+      setFeedbacks((prev) =>
+        prev.map((fb) =>
+          fb.id === id ? { ...fb, acknowledged: true } : fb
+        )
+      );
+    } catch (err) {
+      alert("Failed to acknowledge feedback");
+    }
+  };
+
   return (
     <>
       <Navbar role="employee" />
       <div className="container mt-5">
         <h3>🧑‍💼 Employee Dashboard</h3>
-        <p className="text-muted">View feedback shared by your manager</p>
-        <FeedbackTimeline feedbacks={feedbacks} />
+        <p className="text-muted">View and acknowledge feedback shared by your manager.</p>
+        <FeedbackTimeline feedbacks={feedbacks} onAcknowledge={handleAcknowledge} />
       </div>
     </>
   );
