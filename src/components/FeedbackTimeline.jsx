@@ -1,24 +1,32 @@
 import React from 'react';
 
-const FeedbackTimeline = ({ feedbacks }) => {
-  if (!feedbacks.length) {
+const FeedbackTimeline = ({ feedbacks, onAcknowledge }) => {
+  if (!feedbacks || feedbacks.length === 0) {
     return <p className="mt-4 text-muted">No feedback received yet.</p>;
   }
 
   return (
     <div className="mt-4">
       <h5 className="mb-3">📜 Feedback Timeline</h5>
-      {feedbacks.map((item, index) => (
-        <div key={index} className="card mb-3 shadow-sm">
-          <div className="card-body">
-            <h6 className="card-subtitle mb-2 text-muted">
-              Submitted By: {item.manager_id}
-            </h6>
-            <p><strong>Strengths:</strong> {item.strengths}</p>
-            <p><strong>Areas to Improve:</strong> {item.areas_to_improve}</p>
-            <p><strong>Sentiment:</strong> <span className={`badge bg-${getSentimentColor(item.sentiment)}`}>{item.sentiment}</span></p>
-            <small className="text-muted">Date: {new Date(item.created_at).toLocaleDateString()}</small>
+           {feedbacks.map((feedback) => (
+        <div className="card mb-3 p-3" key={feedback.id}>
+          <div className="d-flex justify-content-between align-items-center">
+            <h5>Feedback #{feedback.id}</h5>
+            {!feedback.acknowledged && (
+              <button
+                className="btn btn-sm btn-success"
+                onClick={() => onAcknowledge(feedback.id)}
+              >
+                ✅ Acknowledge
+              </button>
+            )}
           </div>
+          <p><strong>Strengths:</strong> {feedback.strengths}</p>
+          <p><strong>Areas to Improve:</strong> {feedback.areas_to_improve}</p>
+          <p><strong>Sentiment:</strong> {feedback.sentiment}</p>
+          <p className="text-muted mb-0">
+            {feedback.acknowledged ? "✅ Acknowledged" : "❌ Not Acknowledged"}
+          </p>
         </div>
       ))}
     </div>
