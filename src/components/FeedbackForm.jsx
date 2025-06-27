@@ -1,30 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const FeedbackForm = ({ onSubmit }) => {
+const FeedbackForm = ({ onSubmit, initialData = null, isEdit = false, onCancel }) => {
   const [employeeId, setEmployeeId] = useState('');
   const [strengths, setStrengths] = useState('');
   const [improvements, setImprovements] = useState('');
   const [sentiment, setSentiment] = useState('positive');
 
+  useEffect(() => {
+    if (initialData) {
+      setEmployeeId(initialData.employee_id);
+      setStrengths(initialData.strengths);
+      setImprovements(initialData.areas_to_improve);
+      setSentiment(initialData.sentiment);
+    }
+  }, [initialData]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({
-      employee_id: parseInt(employeeId),
-      strengths,
-      areas_to_improve: improvements,
-      sentiment,
-    });
-
-    // Reset form
-    setEmployeeId('');
-    setStrengths('');
-    setImprovements('');
-    setSentiment('positive');
+    const feedback = { employee_id: employeeId, strengths, areas_to_improve: improvements, sentiment };
+    onSubmit(feedback, initialData?.id); // Pass feedbackId if editing
+    if (!isEdit) {
+      setEmployeeId('');
+      setStrengths('');
+      setImprovements('');
+      setSentiment('positive');
+    }
   };
 
   return (
     <form className="card p-4 mt-4" onSubmit={handleSubmit}>
-      <h5 className="mb-3">Submit Feedback</h5>
+      <h5 className="mb-3">{isEdit ? 'Edit Feedback' : 'Submit Feedback'}</h5>
 
       <div className="mb-3">
         <label className="form-label">Employee ID</label>
@@ -33,6 +38,7 @@ const FeedbackForm = ({ onSubmit }) => {
           className="form-control"
           value={employeeId}
           onChange={(e) => setEmployeeId(e.target.value)}
+          disabled={isEdit} // prevent changing employee on edit
           required
         />
       </div>
@@ -58,7 +64,7 @@ const FeedbackForm = ({ onSubmit }) => {
       </div>
 
       <div className="mb-3">
-        <label className="form-label">Overall Sentiment</label>
+        <label className="form-label">Sentiment</label>
         <select
           className="form-select"
           value={sentiment}
@@ -70,7 +76,16 @@ const FeedbackForm = ({ onSubmit }) => {
         </select>
       </div>
 
-      <button type="submit" className="btn btn-primary">Submit Feedback</button>
+      <div className="d-flex justify-content-between">
+        <button type="submit" className="btn btn-primary">
+          {isEdit ? 'Update Feedback' : 'Submit Feedback'}
+        </button>
+        {isEdit && (
+          <button type="button" className="btn btn-secondary" onClick={onCancel}>
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 };
