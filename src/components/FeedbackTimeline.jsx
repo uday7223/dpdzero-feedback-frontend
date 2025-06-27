@@ -23,7 +23,10 @@ const FeedbackTimeline = ({ feedbacks, onAcknowledge }) => {
           </div>
           <p><strong>Strengths:</strong> {feedback.strengths}</p>
           <p><strong>Areas to Improve:</strong> {feedback.areas_to_improve}</p>
-          <p><strong>Sentiment:</strong> {feedback.sentiment}</p>
+          <span className={`badge bg-${feedback.sentiment === 'positive' ? 'success' : feedback.sentiment === 'neutral' ? 'secondary' : 'danger'}`}>
+  {feedback.sentiment.charAt(0).toUpperCase() + feedback.sentiment.slice(1)}
+</span>
+
           <p className="text-muted mb-0">
             {feedback.acknowledged ? "✅ Acknowledged" : "❌ Not Acknowledged"}
           </p>
@@ -31,19 +34,6 @@ const FeedbackTimeline = ({ feedbacks, onAcknowledge }) => {
       ))}
     </div>
   );
-};
-
-const getSentimentColor = (sentiment) => {
-  switch (sentiment) {
-    case 'positive':
-      return 'success';
-    case 'neutral':
-      return 'secondary';
-    case 'negative':
-      return 'danger';
-    default:
-      return 'light';
-  }
 };
 
 export default FeedbackTimeline;

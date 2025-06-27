@@ -34,14 +34,10 @@ const Navbar = ({ role }) => {
               <>
                 <li className="nav-item">
                   <button className="btn btn-link nav-link" onClick={() => navigate('/manager')}>
-                    Dashboard
+                    Manager Dashboard
                   </button>
                 </li>
-                <li className="nav-item">
-                  <button className="btn btn-link nav-link" onClick={() => navigate('/give-feedback')}>
-                    Give Feedback
-                  </button>
-                </li>
+                
               </>
             )}
             {role === 'employee' && (
