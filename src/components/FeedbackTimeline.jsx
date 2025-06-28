@@ -6,7 +6,7 @@ const FeedbackTimeline = ({ feedbacks, onAcknowledge }) => {
   }
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 feedback-timeline">
       <h5 className="mb-3">📜 Feedback Timeline</h5>
            {feedbacks.map((feedback) => (
         <div className="card mb-3 p-3" key={feedback.id}>
@@ -23,8 +23,8 @@ const FeedbackTimeline = ({ feedbacks, onAcknowledge }) => {
           </div>
           <p><strong>Strengths:</strong> {feedback.strengths}</p>
           <p><strong>Areas to Improve:</strong> {feedback.areas_to_improve}</p>
-          <span className={`badge bg-${feedback.sentiment === 'positive' ? 'success' : feedback.sentiment === 'neutral' ? 'secondary' : 'danger'}`}>
-  {feedback.sentiment.charAt(0).toUpperCase() + feedback.sentiment.slice(1)}
+          <span className={`badge bg-${feedback.sentiment === 'positive' ? 'success' : feedback.sentiment === 'neutral' ? 'warning' : 'danger'}`}>
+            <p>{feedback.sentiment.charAt(0).toUpperCase() + feedback.sentiment.slice(1)}</p>
 </span>
 
           <p className="text-muted mb-0">
