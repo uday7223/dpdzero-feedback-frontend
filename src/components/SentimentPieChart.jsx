@@ -7,11 +7,11 @@ const COLORS = {
   negative: '#dc3545', // red
 };
 
-const SentimentPieChart = () => {
+const SentimentPieChart = (feedbacks) => {
   const [sentimentData, setSentimentData] = useState(null);
 
   useEffect(() => {
-    const fetchFeedbacks = async () => {
+    const fetchFeedbacksSentiments = async () => {
       try {
         const res = await fetch('http://localhost:8000/feedback/team', {
           headers: {
@@ -41,15 +41,20 @@ const SentimentPieChart = () => {
       }
     };
 
-    fetchFeedbacks();
-  }, []);
+    fetchFeedbacksSentiments();
+  }, [feedbacks]);
+
 
   if (!sentimentData) return <p>Loading chart...</p>;
 
   return (
     <div className="mt-5">
       <h5 className="mb-3">📊 Sentiment Overview</h5>
-      <ResponsiveContainer width="100%" height={250}>
+
+      {sentimentData[0].value === 0 && sentimentData[1].value === 0 && sentimentData[2].value === 0 ? (
+        <p className="text-muted">No feedback received yet.</p>
+      ):
+            <ResponsiveContainer width="100%" height={250}>
         <PieChart>
           <Pie
             data={sentimentData}
@@ -65,7 +70,8 @@ const SentimentPieChart = () => {
           <Tooltip />
           <Legend />
         </PieChart>
-      </ResponsiveContainer>
+      </ResponsiveContainer>}
+
     </div>
   );
 };
