@@ -27,8 +27,11 @@ const FeedbackTimeline = ({ feedbacks, onAcknowledge }) => {
             <p>{feedback.sentiment.charAt(0).toUpperCase() + feedback.sentiment.slice(1)}</p>
 </span>
 
-          <p className="text-muted mb-0">
+          <p className="text-muted mb-0 mt-3">
             {feedback.acknowledged ? "✅ Acknowledged" : "❌ Not Acknowledged"}
+          </p>
+          <p className='pt-2'> <span className='fw-bold'>Created :  </span>
+            {new Date(feedback.created_at).toLocaleDateString()}
           </p>
         </div>
       ))}

@@ -61,7 +61,7 @@ const TeamFeedbackList = () => {
                     {fb.sentiment}
                   </span>
                 </td>
-                <td>{fb.acknowledged ? '✅' : '❌'}</td>
+                <td className=''>{fb.acknowledged ? '✅' : '❌'}</td>
                 <td>{new Date(fb.created_at).toLocaleDateString()}</td>
               </tr>
             ))}

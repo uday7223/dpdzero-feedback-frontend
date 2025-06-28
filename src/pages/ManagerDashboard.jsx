@@ -94,7 +94,7 @@ const ManagerDashboard = () => {
         <div className="mt-5">
           <h5 className="mb-3">📝 Previous Feedbacks</h5>
           <div className="table-responsive">
-            <table className="table table-striped">
+            <table className="table table-striped text-center">
               {feedbacks.length === 0 ? (
                 <tbody>
                   <tr>
@@ -137,7 +137,7 @@ const ManagerDashboard = () => {
                         {fb.sentiment}
                       </span>
                     </td>
-                    <td>{fb.acknowledged ? "✅" : "❌"}</td>
+                    <td >{fb.acknowledged ? "✅" : "❌"}</td>
                     <td>{new Date(fb.created_at).toLocaleDateString()}</td>
                     <td>
                       <button
