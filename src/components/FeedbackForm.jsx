@@ -25,6 +25,9 @@ const FeedbackForm = ({ onSubmit, initialData = null, isEdit = false, onCancel }
       setImprovements('');
       setSentiment('positive');
     }
+     setEmployeeId('');
+      setStrengths('');
+      setImprovements('');
   };
 
   return (
